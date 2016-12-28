@@ -10,7 +10,7 @@
 (defn flipUntil
   "Simulates a series of flips"
   [l]
-  (count (take-while #(not (= % l)) (partition 3 (repeatedly random-boolean)))))
+  (count (take-while #(not= % l) (partition 3 (repeatedly random-boolean)))))
 
 (defn day
   [p]
@@ -22,6 +22,5 @@
 (def tuesdayFlipNumber (day '(true false false)))
 
 ;; TODO: create a spec that check that p is a list of booleans
-
 
 
