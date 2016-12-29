@@ -39,21 +39,38 @@
 
 ;; ex2 : find the first year for which the sum of both groups of two digits is equal to the middle two digits.
 
-;; what i want is a fn that i pass an infinite list and it process it untill it
-;; finds a value that matches the predicate 
+;; My steps to finding the solution
+(int (+ (/ 1978 100) (mod 1978 100)))
 
-;; (take 5 (drop-while #(<= % 1978) (range)))
+(int (/ (mod 1978 1000) 10))
 
-(+ (/ 1978 100) (mod 1978 100))
+(apply #(= (int (+ (/ % 100) (mod % 100))) (int (/ (mod % 1000) 10))) `(1978))
 
-(apply #(= (+ (/ % 100) (mod % 100)) (/ (mod % 1000) 10)) `(1978))
-
-(filter #(= (+ (/ % 100) (mod % 100)) (/ (mod % 1000) 10))
+(filter #(= (int (+ (/ % 100) (mod % 100))) (int (/ (mod % 1000) 10)))
         (drop-while #(<= % 1978) (range)))
 
-(filter #(= (+ (/ % 100) (mod % 100)) (/ (mod % 1000) 10))
+(filter #(= (int (+ (/ % 100) (mod % 100))) (int (/ (mod % 1000) 10)))
         (take-last 2 (take-while #(<= % 2307) (drop-while #(<= % 1978) (range)))))
 
-(defn sumDay
+
+(+ (last
+  (take-while #(not= (int (+ (/ % 100) (mod % 100))) (int (/ (mod % 1000) 10)))
+              (drop-while #(<= % 1978) (range)))) 1)
+
+
+;; first attempt
+(defn sum-day
   []
-  ())
+  (+ (last
+      (take-while #(not= (int (+ (/ % 100) (mod % 100))) (int (/ (mod % 1000) 10)))
+                  (drop-while #(<= % 1978) (range)))) 1))
+
+(sum-day)
+
+;; make it better #2
+(defn sum-day-2
+  []
+  (inc (last
+        (take-while #(not= (int (+ (/ % 100) (mod % 100))) (int (/ (mod % 1000) 10)))
+                    (drop-while #(<= % 1978) (range))))))
+
